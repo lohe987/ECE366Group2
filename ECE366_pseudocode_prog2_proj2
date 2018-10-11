@@ -1,0 +1,22 @@
+;pseudocode for ECE366, project2, program2
+1. Initialize all the registers to the correct values, especially the pointer registers
+Note: Start of our general loop
+2. Compare T to Pattern_Array using xor, store result into the register that holds T since we can just reload its value from memory
+3. Initialize a register to 1 so that we can use it to check which bits of the xor 
+4. Repeatedly AND it with the xor result, and shift the "bitchecker" register's 1 to the left repeatedly by adding it itself to mimic multiplying by 2
+5. Each time the result is non-zero (the result will evaluate to 0 or some power of 2), it makes our branch register 1, and we'll have code to increment some counter
+6. Once our bitchecker register overflows to 0, we end the bitchecking process
+7. Initialize some register to 16, then subtract the value of the counter register from it
+8. We can reuse our counter register now, so pull from memory the best_match score in memory location
+9a. Compare them, and determine which one to store back into memory
+9b. While doing #9a, we will need to have code that determines whether we increment counter or reset it to 0
+9b cont. I'm not sure if we'll need to take advantage of the memory for this. Note: We might be able to get away with store it in r1
+9b cont. although that remains to be seen when the code is more fleshed out because we might need r1 for something else.
+9b cont. Keep in mind which registers are supported by the load and store functions, although r1 isn't directly supported,
+9b cont. it is possible to transfer the information in it to one of the registers that is supported by the memory access instructions
+Note: At this point, we're at the end of the loop, and we've done all the processing and data manipulation that we needed to do. 
+	Thus, we need to now write code to determine whether or not we continue looping.
+10. This most likely will be achieved by holding a counter value for the overall loop in memory.
+	- It looks like we have memory addresses 0, 1, 2, 6,  and 7 to work with.
+11. Force a halt using branch 0
+ 
