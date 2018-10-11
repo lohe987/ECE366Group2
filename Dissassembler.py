@@ -133,7 +133,7 @@ def convert_bin_to_asm(input_file, output_file):
                 c = "5"
             a = "STORE"
             output_file.write(str(a) + " " + "$" + str(d) + "," + " " + str(c) + "\n")
-        if line[0:5] == '11111':  # STORE instruction
+        if line[0:5] == '11111':  # Load instruction
             op = line[0:5]
             RX = line[5:6]
             RY = line[6:7]
