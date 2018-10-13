@@ -11,11 +11,17 @@
 
 ; A potentially useful modification to our current ISA
 ; Re-introduce R7, so our ISA uses a total of 8 registers
-; Change it so that ADD's supported range is [1,4]
+; Change it so that ADD's supported register range is [1,4]
 ; Allow ADDI to handle initializing/re-initializing registers back to 0 whenever the immediate
 ; value is equal to zero. 
 ; Shift the pointer registers and flag register up by 1. 
- 
+
+; Quick example of the suggested change
+; BNLT #i ;machine code: 110 iiii
+; XOR Rx, Ry ; machine code: 101 1xxy
+; AND Rx, Ry ; machine code: 101 0xxy
+
+; This would probably be changed to BLT, for branch when less than and/or bacon, lettuce, and tomato
 B #i	; machine code: 000 iiii	
 ; If R6==1, pc = pc + imm, supports imm range: [-8, 7]
 ; else pc = pc + 1
