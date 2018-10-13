@@ -10,10 +10,11 @@
 ; F will represent free variable
 
 ; A potentially useful modification to our current ISA
-; Re-introduce R4, so our ISA uses a total of 8 registers
+; Re-introduce R7, so our ISA uses a total of 8 registers
 ; Change it so that ADD's supported range is [1,4]
 ; Allow ADDI to handle initializing/re-initializing registers back to 0 whenever the immediate
 ; value is equal to zero. 
+; Shift the pointer registers and flag register up by 1. 
  
 B #i	; machine code: 000 iiii	
 ; If R6==1, pc = pc + imm, supports [-8, 7]
