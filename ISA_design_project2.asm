@@ -41,6 +41,7 @@ SLT Rx, Ry	; machine code: 100 xxyy
 XOR Rx, Ry	; machine code: 101 xxyy
 ; Does bit-wise XOR between Rx and Ry and stores the results in Rx
 ; Remember that R0 is read-only
+; I think we can combine XOR and AND because we don't really need them to support more than two registers right? 
 
 AND Rx, Ry	; machine code: 110 xxyy
 ; Does bit-wise AND between Rx and Ry and stores the results in Rx
