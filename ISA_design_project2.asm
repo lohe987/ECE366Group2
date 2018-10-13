@@ -8,6 +8,12 @@
 ; R6 will be the flag register of our comparsion instruction (SLT, we're just going to borrow from MIPS for this)
 
 ; F will represent free variable
+
+; A potentially useful modification to our current ISA
+; Re-introduce R4, so our ISA uses a total of 8 registers
+; Change it so that ADD's supported range is [1,4]
+; Allow ADDI to handle initializing/re-initializing registers back to 0 whenever the immediate
+; value is equal to zero. 
  
 B #i	; machine code: 000 iiii	
 ; If R6==1, pc = pc + imm, supports [-8, 7]
