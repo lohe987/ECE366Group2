@@ -16,6 +16,8 @@
 ; value is equal to zero. 
 ; Shift the pointer registers and flag register up by 1. 
 
+; I think we have room to sneak in an branch instruction that branches if R6 == 0 if we combine AND and XOR
+; I don't think it's necessary though, and I'm too lazy to go back and change the code we've written so far. 
 ; Quick example of the suggested change
 ; BNLT #i ;machine code: 110 iiii
 ; XOR Rx, Ry ; machine code: 101 1xxy
@@ -27,8 +29,7 @@ B #i	; machine code: 000 iiii
 ; else pc = pc + 1
 ; We're going to use imm == 0 as our halt instruction
 
-; I think we have room to sneak in an branch instruction that branches if R6 == 0 if we combine AND and XOR
-; I don't think it's necessary though, and I'm too lazy to go back and change the code we've written so far. 
+
 
 ADD Rx, Ry	;machine code: 001 xxyy
 ; If Ry == R0, then Rx = R0
