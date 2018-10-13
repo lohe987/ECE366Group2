@@ -39,11 +39,12 @@ SUB Rx, Ry	; machine code: 011 xxyy
 ; We should make this SUB instruction an unsigned subtraction, but I'm not sure how to implement that in hardware
 ; It should be unsigned subtraction so that our mod function can fully support the 16 bit-value that we can load from memory
 ; Our professor didn't specify whether or not the value was going to be unsigned, but let's assume it is since 
-; this will make our program more flexible
+; this will make our program more flexible, and it does say that P is a 16-bit positive number
 
 SLT Rx, Ry	; machine code: 100 xxyy
 ; If Rx < Ry, then R6 = 1
 ; else aka Rx >= Ry, then R6 = 0
+; Note: This is signed comparsion
 
 XOR Rx, Ry	; machine code: 101 xxyy
 ; Does bit-wise XOR between Rx and Ry and stores the results in Rx
