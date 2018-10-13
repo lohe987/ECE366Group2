@@ -17,7 +17,7 @@
 ; Shift the pointer registers and flag register up by 1. 
  
 B #i	; machine code: 000 iiii	
-; If R6==1, pc = pc + imm, supports [-8, 7]
+; If R6==1, pc = pc + imm, supports imm range: [-8, 7]
 ; else pc = pc + 1
 ; We're going to use imm == 0 as our halt instruction
 
@@ -31,20 +31,20 @@ ADD Rx, Ry	;machine code: 001 xxyy
 
 ADDI Rx, #i	; machine code: 010 xxii
 ; Rx = Rx + #i	
-; Supports [-2, 1]
+; Supports imm range: [-2, 1]
 ; Supporting 0 for this is kind of useless, but I think it'll make the hardware implementation easier
 
 SUB Rx, Ry	; machine code: 011 xxyy
 ; Rx = Rx - Ry
 ; We should make this SUB instruction an unsigned subtraction, but I'm not sure how to implement that in hardware
-; It should be unsigned subtraction so that our mod function can fully support the 16 bit-value that we can load from memory
-; Our professor didn't specify whether or not the value was going to be unsigned, but let's assume it is since 
-; this will make our program more flexible, and it does say that P is a 16-bit positive number
+; It should be unsigned subtraction so that our mod function can fully support the 16 bit-value that 
+; we can load from memory and it does say that P is a 16-bit positive number so 
+; using signed addition would technically cause problems for us since we'd only support up to 15-bit positive numbers. 
 
 SLT Rx, Ry	; machine code: 100 xxyy
 ; If Rx < Ry, then R6 = 1
 ; else aka Rx >= Ry, then R6 = 0
-; Note: This is signed comparsion
+; Note: This is signed comparsion so we can just follow the template provided in class
 
 XOR Rx, Ry	; machine code: 101 xxyy
 ; Does bit-wise XOR between Rx and Ry and stores the results in Rx
@@ -55,28 +55,28 @@ AND Rx, Ry	; machine code: 110 xxyy
 ; Does bit-wise AND between Rx and Ry and stores the results in Rx
 
 STORE Rx, [Rp]	; machine code: 111 10xp
-; if x == 0, then Rx == R1
-; else, Rx == R2
-; if p == 0, then Rp == R4
-; else, Rp == R5
+; if Rx == R1, then x = 0 
+; else if Rx == R2, then x = 1
+; if Rp == R4, then p = 0 
+; else if Rp = R5, then p = 1
 ; Rx = value at memory address of the value in Rp
 
 LOAD Rx, [Rp]	; machine code: 111 11xp
-; if x == 0, then Rx == R1
-; else, Rx == R2
-; if p == 0, then Rp == R4
-; else, Rp == R5
-; Rx = value at memory address of the value in Rp
+; if Rx == R1, then x = 0 
+; else if Rx == R2, then x = 1
+; if Rp = R4, then p = 0
+; else if Rp = R5, then p = 1
+; Rx = memory_data[ Rp ] 
 
-AddPtr Rp, #i	; machine code: 111 00pi
-; if p == 0, then Rp == R4
-; else, Rp == R5
-; if i == 0, then n = -1
-; else, n = 1
+AddPtr Rp, #n	; machine code: 111 00pi
+; if Rp == R4, then p = 0 
+; else if Rp == R5, then p = 1
+; if n == -1, then i = 0
+; else if n == 1, then i = 1
 ; Rp = Rp + n
 
 ResetPtr Rp, #f	; machine code: 111 01pf
-; if p == 0, then Rp == R4
-; else, Rp == R5
+; if Rp == R4, then p = 0 
+; else if, Rp == R5, then p = 1
 ; Rp = 0
 ; Doesn't really matter what the last bit is actually, we could sneak in another instruction here if we wanted to. 
