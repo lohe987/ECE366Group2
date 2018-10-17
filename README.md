@@ -1,5 +1,6 @@
 # ECE366Group2
 This is an ISA design for project 2 of ECE366 at UIC, Fall 2018, taught by Dr. Wenjing Rao
+
 The purpose of ISA is to achieve two different purposes:
 1. Compute the results of (6^P)%Q where P and Q are 16-bit unsigned integers that are stored in memory and 
   will be input in before the actual program runs. 
