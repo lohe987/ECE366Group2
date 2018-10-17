@@ -6,6 +6,7 @@
 ; R5 and R6 are our pointer registers, our instructions that access memory will specifically
 ; reference these two pointers to know which address to access
 ; We also have a flag register for our comparsion instruction (SLT, we're just going to borrow from MIPS for this)
+; All instructions besides B will simply make pc = pc + 1
 
 ; I think we have room to sneak in an branch instruction that branches if R6 == 0 if we combine AND and XOR
 ; I don't think it's necessary though, and I'm too lazy to go back and change the code we've written so far. 
