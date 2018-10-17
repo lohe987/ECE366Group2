@@ -9,6 +9,9 @@ The purpose of ISA is to achieve two different purposes:
   
 Our ISA will be called, "Give us full points for our pointers" ISA 
 Group members are:
+
 Jenshin P Chen
+
 Singee Nguyen
+
 Imran Babar
