@@ -67,7 +67,7 @@ LOAD Rx, [Rp]	; machine code: 111 11xp
 ; else if Rp = R6, then p = 1
 ; Rx = memory_data[ Rp ] 
 
-AddPtr Rp, #n	; machine code: 111 00pi
+AddPtr Rp, #n	; machine code: 111 00ip
 ; Supports R5, R6
 ; if Rp == R5, then p = 0 
 ; else if Rp == R6, then p = 1
@@ -76,7 +76,7 @@ AddPtr Rp, #n	; machine code: 111 00pi
 ; Rp = Rp + n
 
 ; f will represent free variable
-ResetPtr Rp, #f	; machine code: 111 01pf
+ResetPtr Rp, #f	; machine code: 111 01fp
 ; Supports R5, R6
 ; if Rp == R5, then p = 0 
 ; else if, Rp == R6, then p = 1
