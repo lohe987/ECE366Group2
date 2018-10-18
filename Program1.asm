@@ -18,11 +18,6 @@ Addi R2, #1
 Addi R2, #1  		; R2 == 3
 Add R2, R2  		; R2 == 6
 
-;Addi R1, 1
-;Addi R1, 1
-;Addi R1, 1
-;Add R1, R1  		;R1 == 6
-
 AddPtr R5, #1
 AddPtr R5, #1
 AddPtr R5, #1		;R5 now points to the array that will hold the mod values we need 
@@ -69,10 +64,10 @@ Addi R2, #1
 
 Addi R4, #0	;I should have used R4 earlier as my counter
 Addi R4, #1
-Addi R4, R4	;R4 == 2
-Addi R4, R4	;R4 == 4
-Addi R4, R4	;R4 == 8
-Addi R4, R4	;R4 == 16
+Add R4, R4	;R4 == 2
+Add R4, R4	;R4 == 4
+Add R4, R4	;R4 == 8
+Add R4, R4	;R4 == 16
 Addi R4, #-1 ;R4 == 15 
   
 ResetPtr R5
