@@ -105,16 +105,18 @@ SLT R1, R0	;force branch back to the up to start of checking digits
 B #-6		;Linked branch set 3
 ;Start of the repeated addition loop
 Add R2, R1
-Addi R3, #-2
+Addi R3, #-1	; I might need to change this back to #-2
 B #-3		;Linked branch set 4, although it will be linked to branch set 3 from now on
 Add R1, R2
 Addi R3, #-1
-SLT R0, R3 
+SLT R0, R3 	;Doesn't branch when R3 == 0 since R0 >= R3 
 B #-3
-SLT R4, R0		;branch out when R4 is negative 
+B #-5		;Linked branch set 4
+Add R3, R4
+SLT R3, R0	;branch out when R4 is negative 
 B 3	
 SLT R0, R1
-B #-8 		;Linked branch set 4 
+B #-5 		;Linked branch set 4 
 
 Addi R2, #0 
 Add R2, R1
