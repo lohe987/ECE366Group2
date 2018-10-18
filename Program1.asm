@@ -63,9 +63,9 @@ B #-8 			;Repeat the mod process; linked branch, set 1
 
 ;Clean slate!!! 
 Addi R1, #0
-Addi R1, #1		;This is the register that will shift the 1 to check whether there's a 1 at a position or not 
 
-Addi R3, #0
+Addi R2, #0
+Addi R2, #1
 
 Addi R4, #0	;I should have used R4 earlier as my counter
 Addi R4, #1
@@ -80,8 +80,58 @@ ResetPtr R6
 AddPtr R5, #1
 AddPtr R5, #1	;R5 == 3
 
-;This block of code will process P to see which bits of its binary representation is a 1, then multiplies the values as necessary
-Load R2, [R5]	;R2 == P 
-And R2, R1
-Addi R2, #-1 	;This is needed to make this SLT logic work out, otherwise, R2 always >= 0
-SLT R2, R0
+;This block of code will process P to see which bits of its binary representation is a 1, later blocks will multiplies the values as necessary
+Load R3, [R6]	;R3 == P
+AddPtr R6, #1
+AddPtr R6, #1	;R6 == 2
+Load R2, [R6]
+B #-4			;linked branch set 2
+And R3, R2
+Addi R3, #-1 	;This is needed to make this SLT logic work out, otherwise, R2 always >= 0
+Addi R4, #-1
+AddPtr R5, #1
+Add R2, R2		;"left shift" R2  
+SLT R3, R0
+B #-7	;R3 == 0 before I did the subtraction, thus there was a 0 at this digit; linked branch set 2
+
+;Note the value in R1 should be the result of all the multiplication that we need to do
+;Its value will need to be shifted back into one of the registers that have access to memory after everything is said and done
+;This had to happen though in order to preserve some of the values that would be used.
+;Stores the bitchecker value  
+Store R2, [R6]
+ResetPtr R6
+Addi R2, #0
+B #-4  		;Linked branch set 3, although this is going to be linked to set 2 from this point above 
+Load R3, [R5]
+SLT R0, R1 		;This will only evaluate to false during the first run that we found a 1 
+B #4
+Add R1, R3	;This is initializing R1 since it should be zero when this line executes
+SLT R1, R0	;force branch back to the up to start of checking digits 
+B #-6		;Linked branch set 3
+;Start of the repeated addition loop
+Add R2, R1
+Addi R3, #-2
+B #-3		;Linked branch set 4, although it will be linked to branch set 3 from now on
+Add R1, R2
+Addi R3, #-1
+SLT R0, R3 
+B #-3
+SLT R4, R0		;branch out when R4 is negative 
+B 3	
+SLT R0, R1
+B #-8 		;Linked branch set 4 
+
+Addi R2, #0 
+Add R2, R1
+Addi R1, #0 
+ResetPtr R5
+AddPtr R5, #1
+Load R3, [R5]  
+AddPtr R5, #1
+SLT R2, R3
+B #4		 	;exits when R2 < Q 
+Sub R2, R3
+SLT R0, R3		;Essentially a force branch
+B #-4			;Branch for the mod, and it's being used as part of Linked branch, set 1 
+Store R2, [R5]	;So...R2 should be the value that I'm looking for now...and R2 == 2
+B #0			;stall branch  
