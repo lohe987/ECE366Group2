@@ -39,13 +39,13 @@ AddPtr R5, #1		;Moves down the array
 Addi R1, #0 	
 Add R3, R2		;R3 = R2, and R3 will be used as a counter again, although this is a different value and will not need to be stored in memory 
 B #-6			;Linked branch, set 1
-Addi R3, #-2		;We need to decrement it by 2 though due to 5 * 5 only having 4 plus signs and how our SLT works  
+Addi R3, #-1		;We need to decrement it by 1 though due to 5 * 5 only having 4 plus signs  
 Add R1, R2		;R1 is acting as an intermediate here; it's the number that we're going to repeatedly add to do our multiplication 
 Add R2, R1 
 Addi R3, #-1		;Decrement counterB 
 SLT R0, R3		;Branches if R3 >= 0   
 B #-3
-AddPtr R6, #1		;R6 == 2 since counter is at Mem[2]
+AddPtr R6, #1		;R6 == 2 since counterA is at Mem[2]
 B #-8			;linked branch, set 1
 Load R3, [R6]
 Addi R3, #-1		;decrement counterA
@@ -106,7 +106,8 @@ B #-6		;Linked branch set 3
 ;Start of the repeated addition loop
 Add R2, R1
 Addi R3, #-1	; I might need to change this back to #-2
-B #-3		;Linked branch set 4, although it will be linked to branch set 3 from now on
+SLT R0, R0 	;reset flag register 
+B #-4		;Linked branch set 4, although it will be linked to branch set 3 from now on
 Add R1, R2
 Addi R3, #-1
 SLT R0, R3 	;Doesn't branch when R3 == 0 since R0 >= R3 
