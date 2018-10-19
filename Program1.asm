@@ -76,11 +76,12 @@ AddPtr R5, #1
 AddPtr R5, #1	;R5 == 3
 
 ;This block of code will process P to see which bits of its binary representation is a 1, later blocks will multiplies the values as necessary
+AddPtr R6, #-1	;This just has to be here for the mod within the repeated addition loop 
 Load R3, [R6]	;R3 == P
 AddPtr R6, #1
 AddPtr R6, #1	;R6 == 2
 Load R2, [R6]
-B #-4		;linked branch set 2
+B #-5		;linked branch set 2
 And R3, R2
 Addi R3, #-1 	;This is needed to make this SLT logic work out, otherwise, R2 always >= 0
 Addi R4, #-1
@@ -108,16 +109,23 @@ Add R2, R1
 Addi R3, #-1	; I might need to change this back to #-2
 SLT R0, R0 	;reset flag register 
 B #-4		;Linked branch set 4, although it will be linked to branch set 3 from now on
-Add R1, R2
+Add R1, R2	;Repeated addition to simulate multiplication 
 Addi R3, #-1
 SLT R0, R3 	;Doesn't branch when R3 == 0 since R0 >= R3 
 B #-3
 B #-5		;Linked branch set 4
+AddPtr R6, #1
+Load R2, [R6]	; R2 == Q, we need to find the mod during the multiplication, otherwise, we go out of bounds 
+SLT R1, R2
+B #-4 		;Technically its own set of branch, but it's going to be linked to branch set 4 
+Sub R1, R2
+SLT R0, R2 
+B #-4
 Add R3, R4
 SLT R3, R0	;branch out when R4 is negative 
 B 3	
 SLT R0, R1
-B #-5 		;Linked branch set 4 
+B #-8 		;Linked branch set 4 
 
 Addi R2, #0 
 Add R2, R1
